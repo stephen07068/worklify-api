@@ -74,12 +74,14 @@ def register():
     if not data or not data.get('email') or not data.get('password') or not data.get('name'):
         return jsonify({"message": "Missing required fields"}), 400
 
-    if User.query.filter_by(email=data['email']).first():
+    email = data.get('email', '').strip().lower()
+
+    if User.query.filter_by(email=email).first():
         return jsonify({"message": "Email already registered"}), 400
 
     new_user = User(
         name=data['name'],
-        email=data['email']
+        email=email
     )
     new_user.set_password(data['password'])
     db.session.add(new_user)
@@ -94,7 +96,9 @@ def login():
     if not data or not data.get('email') or not data.get('password'):
         return jsonify({"message": "Missing email or password"}), 400
 
-    user = User.query.filter_by(email=data['email']).first()
+    email = data.get('email', '').strip().lower()
+    
+    user = User.query.filter_by(email=email).first()
     if not user or not user.check_password(data['password']):
         return jsonify({"message": "Invalid credentials"}), 401
 
