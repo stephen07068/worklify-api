@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
@@ -13,7 +14,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY') or 'jwt-super-secret-key-456'
     # Tokens expire in 7 days so users stay logged in comfortably
-    JWT_ACCESS_TOKEN_EXPIRES = 604800
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(days=7)
     # Email (Gmail SMTP) for password reset
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME', 'worklifyremotejobs@gmail.com')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD', '')  # Gmail App Password
