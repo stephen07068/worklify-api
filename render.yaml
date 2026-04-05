@@ -20,3 +20,4 @@ databases:
   - name: worklify-db
     databaseName: worklify
     user: worklify
+    plan: free
