@@ -7,7 +7,7 @@ users_bp = Blueprint('users', __name__, url_prefix='/api')
 @users_bp.route('/user/dashboard', methods=['GET'])
 @jwt_required()
 def dashboard():
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     user = User.query.get(user_id)
     if not user:
         return jsonify({"message": "User not found"}), 404
@@ -25,7 +25,7 @@ def dashboard():
 @users_bp.route('/apply/<int:job_id>', methods=['POST'])
 @jwt_required()
 def apply_job(job_id):
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     job = Job.query.get_or_404(job_id)
     
     # Check if already applied

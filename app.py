@@ -1,4 +1,5 @@
 from flask import Flask, jsonify
+from sqlalchemy import text
 from config import Config
 from models import db, User, Job
 from flask_jwt_extended import JWTManager
@@ -34,6 +35,17 @@ def create_app():
             "status": "Running",
             "message": "Welcome to the Worklify REST API. Please use the /api/ routes."
         })
+
+    # Health check — confirms DB is reachable
+    @app.route('/health')
+    def health():
+        try:
+            db.session.execute(text('SELECT 1'))
+            db_url = app.config.get('SQLALCHEMY_DATABASE_URI', '')
+            db_type = 'postgresql' if 'postgresql' in db_url else 'sqlite (WARNING: ephemeral!)'
+            return jsonify({"status": "ok", "database": db_type}), 200
+        except Exception as e:
+            return jsonify({"status": "error", "detail": str(e)}), 500
 
     # Error Handlers
     @app.errorhandler(404)
