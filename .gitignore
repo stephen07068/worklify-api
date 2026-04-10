@@ -1,17 +1,16 @@
-# Python
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
 *.pyd
 .env
-
-# Database — Render uses ephemeral storage; DB is created fresh on startup
+.env.*
 *.db
 *.sqlite3
-
-# Logs
+instance/
+.venv/
+venv/
+env/
 *.log
-
-# OS
 .DS_Store
 Thumbs.db
+render.yaml

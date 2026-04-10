@@ -1,3 +1,4 @@
+import os
 from flask import Flask, jsonify
 from sqlalchemy import text
 from config import Config
@@ -87,6 +88,7 @@ with app.app_context():
     seed_database()
 
 if __name__ == '__main__':
-    # Run the Flask API Server on a different port to avoid conflicts with your main app
-    print("\n[START] Worklify REST API starting on port 5001 (accessible via local network)\n")
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    port = int(os.environ.get('PORT', 5001))
+    print(f"\n[START] Worklify REST API starting on port {port}\n")
+    app.run(debug=False, host='0.0.0.0', port=port)
+
