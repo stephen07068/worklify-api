@@ -59,10 +59,11 @@ def create_app():
 
     return app
 
+# Create app at module level for Gunicorn
 app = create_app()
 
 def seed_database():
-    """Seed the database with an admin user and some default jobs for testing"""
+    """Seed the database with an admin user and some default jobs"""
     # Create admin user if it doesn't exist
     if not User.query.filter_by(role='admin').first():
         admin = User(name="Admin User", email="admin@worklify.com", role="admin")
@@ -91,4 +92,3 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5001))
     print(f"\n[START] Worklify REST API starting on port {port}\n")
     app.run(debug=False, host='0.0.0.0', port=port)
-
